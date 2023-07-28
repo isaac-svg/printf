@@ -1,21 +1,21 @@
 #include "main.h"
 
 /**
- * get_width - Extracts the width specifier for printing from the format string
+ * getWidth - Extracts the width specifier for printing from the format string
  * @format_str: Formatted string containing the arguments
  * @index_ptr: Pointer to track the position in the format string
  * @arg_list: List of arguments to be printed
  *
  * Return: Width specifier for printing
  */
-int get_width(const char *format_str, int *index_ptr, va_list arg_list)
+int getWidth(const char *format_str, int *index_ptr, va_list arg_list)
 {
     int curr_index;
     int width_spec = 0;
 
     for (curr_index = *index_ptr + 1; format_str[curr_index] != '\0'; curr_index++)
     {
-        if (is_digit(format_str[curr_index]))
+        if (isDigitChar(format_str[curr_index]))
         {
             width_spec *= 10;
             width_spec += format_str[curr_index] - '0';

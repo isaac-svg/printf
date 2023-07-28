@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * print_char - Prints a single character.
+ * printChar - Prints a single character.
  * @args: List of arguments containing the character to print.
  * @buf: Buffer array to handle the print operation.
  * @fl: Flags that calculate the active formatting options.
@@ -11,15 +11,15 @@
  *
  * Return: The number of characters printed.
  */
-int print_char(va_list args, char buf[], int fl, int w, int prec, int sz)
+int printChar(va_list args, char buf[], int fl, int w, int prec, int sz)
 {
     char ch = va_arg(args, int);
 
-    return (handle_write_char(ch, buf, fl, w, prec, sz));
+    return (handleWriteChar(ch, buf, fl, w, prec, sz));
 }
 
 /**
- * print_string - Prints a string.
+ * printString - Prints a string.
  * @args: List of arguments containing the string to print.
  * @buf: Buffer array to handle the print operation.
  * @fl: Flags that calculate the active formatting options.
@@ -29,7 +29,7 @@ int print_char(va_list args, char buf[], int fl, int w, int prec, int sz)
  *
  * Return: The number of characters printed.
  */
-int print_string(va_list args, char buf[], int fl, int w, int prec, int sz)
+int printString(va_list args, char buf[], int fl, int w, int prec, int sz)
 {
     int len = 0, i;
     char *s = va_arg(args, char *);
@@ -55,7 +55,7 @@ int print_string(va_list args, char buf[], int fl, int w, int prec, int sz)
 
     if (w > len)
     {
-        if (fl & F_MINUS)
+        if (fl & FLAG_MINUS)
         {
             write(1, &s[0], len);
             for (i = w - len; i > 0; i--)
@@ -75,7 +75,7 @@ int print_string(va_list args, char buf[], int fl, int w, int prec, int sz)
 }
 
 /**
- * print_percent - Prints a percent sign.
+ * printPercent - Prints a percent sign.
  * @args: List of arguments (unused in this function).
  * @buf: Buffer array to handle the print operation.
  * @fl: Flags that calculate the active formatting options (unused in this function).
@@ -85,7 +85,7 @@ int print_string(va_list args, char buf[], int fl, int w, int prec, int sz)
  *
  * Return: The number of characters printed (always 1 for the percent sign).
  */
-int print_percent(va_list args, char buf[], int fl, int w, int prec, int sz)
+int printPercent(va_list args, char buf[], int fl, int w, int prec, int sz)
 {
     UNUSED(args);
     UNUSED(buf);
@@ -98,7 +98,7 @@ int print_percent(va_list args, char buf[], int fl, int w, int prec, int sz)
 }
 
 /**
- * print_int - Prints an integer.
+ * printInt - Prints an integer.
  * @args: List of arguments containing the integer to print.
  * @buf: Buffer array to handle the print operation.
  * @fl: Flags that calculate the active formatting options.
@@ -108,19 +108,19 @@ int print_percent(va_list args, char buf[], int fl, int w, int prec, int sz)
  *
  * Return: The number of characters printed.
  */
-int print_int(va_list args, char buf[], int fl, int w, int prec, int sz)
+int printInt(va_list args, char buf[], int fl, int w, int prec, int sz)
 {
-    int i = BUFF_SIZE - 2;
+    int i = BUFFER_SIZE - 2;
     int is_neg = 0;
     long int num = va_arg(args, long int);
     unsigned long int n;
 
-    num = convert_size_number(num, sz);
+    num = convertToSizeNumber(num, sz);
 
     if (num == 0)
         buf[i--] = '0';
 
-    buf[BUFF_SIZE - 1] = '\0';
+    buf[BUFFER_SIZE - 1] = '\0';
     n = (unsigned long int)num;
 
     if (num < 0)
@@ -137,11 +137,11 @@ int print_int(va_list args, char buf[], int fl, int w, int prec, int sz)
 
     i++;
 
-    return (write_number(is_neg, i, buf, fl, w, prec, sz));
+    return (writeNumber(is_neg, i, buf, fl, w, prec, sz));
 }
 
 /**
- * print_binary - Prints an unsigned integer in binary format.
+ * printBinary - Prints an unsigned integer in binary format.
  * @args: List of arguments containing the integer to print in binary format.
  * @buf: Buffer array to handle the print operation.
  * @fl: Flags that calculate the active formatting options (unused in this function).
@@ -151,7 +151,7 @@ int print_int(va_list args, char buf[], int fl, int w, int prec, int sz)
  *
  * Return: The number of characters printed.
  */
-int print_binary(va_list args, char buf[], int fl, int w, int prec, int sz)
+int printBinary(va_list args, char buf[], int fl, int w, int prec, int sz)
 {
     unsigned int num, mask, i, sum;
     unsigned int bits[32];

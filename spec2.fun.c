@@ -1,8 +1,7 @@
 #include "main.h"
 
-/************************* PRINT POINTER *************************/
 /**
- * print_pointer - Prints the value of a pointer variable
+ * printPointer - Prints the value of a pointer variable
  * @args: List of arguments
  * @buf: Buffer array to handle print
  * @flags: Calculates active flags
@@ -11,10 +10,10 @@
  * @size: Size specifier
  * Return: Number of chars printed
  */
-int print_pointer(va_list args, char buf[], int flags, int width, int precision, int size)
+int printPointer(va_list args, char buf[], int flags, int width, int precision, int size)
 {
     char extra_char = 0, padding_char = ' ';
-    int index = BUFF_SIZE - 2, length = 2, padding_start = 1; /* length=2, for '0x' */
+    int index = BUFFER_SIZE - 2, length = 2, padding_start = 1; /* length=2, for '0x' */
     unsigned long int num_addresses;
     char hex_map[] = "0123456789abcdef";
     void *addresses = va_arg(args, void *);
@@ -25,7 +24,7 @@ int print_pointer(va_list args, char buf[], int flags, int width, int precision,
     if (addresses == NULL)
         return (write(1, "(nil)", 5));
 
-    buf[BUFF_SIZE - 1] = '\0';
+    buf[BUFFER_SIZE - 1] = '\0';
     UNUSED(precision);
 
     num_addresses = (unsigned long int)addresses;
@@ -37,21 +36,21 @@ int print_pointer(va_list args, char buf[], int flags, int width, int precision,
         length++;
     }
 
-    if ((flags & F_ZERO) && !(flags & F_MINUS))
+    if ((flags & FLAG_ZERO) && !(flags & FLAG_MINUS))
         padding_char = '0';
-    if (flags & F_PLUS)
+    if (flags & FLAG_PLUS)
         extra_char = '+', length++;
-    else if (flags & F_SPACE)
+    else if (flags & FLAG_SPACE)
         extra_char = ' ', length++;
 
     index++;
 
-    return (write_pointer(buf, index, length, width, flags, padding_char, extra_char, padding_start));
+    return (writePointer(buf, index, length, width, flags, padding_char, extra_char, padding_start));
 }
 
 /************************* PRINT NON PRINTABLE *************************/
 /**
- * print_non_printable - Prints ascii codes in hexa of non-printable chars
+ * printNoNrintable - Prints ascii codes in hexa of non-printable chars
  * @args: List of arguments
  * @buf: Buffer array to handle print
  * @flags: Calculates active flags
@@ -60,7 +59,7 @@ int print_pointer(va_list args, char buf[], int flags, int width, int precision,
  * @size: Size specifier
  * Return: Number of chars printed
  */
-int print_non_printable(va_list args, char buf[], int flags, int width, int precision, int size)
+int printNonPrintable(va_list args, char buf[], int flags, int width, int precision, int size)
 {
     int i = 0, offset = 0;
     char *str = va_arg(args, char *);
@@ -75,10 +74,10 @@ int print_non_printable(va_list args, char buf[], int flags, int width, int prec
 
     while (str[i] != '\0')
     {
-        if (is_printable(str[i]))
+        if (isPrintableChar(str[i]))
             buf[i + offset] = str[i];
         else
-            offset += append_hex_code(str[i], buf, i + offset);
+            offset += appendHexCode(str[i], buf, i + offset);
 
         i++;
     }
@@ -90,7 +89,7 @@ int print_non_printable(va_list args, char buf[], int flags, int width, int prec
 
 /************************* PRINT REVERSE *************************/
 /**
- * print_reverse - Prints reverse string.
+ * printReverse - Prints reverse string.
  * @args: List of arguments
  * @buf: Buffer array to handle print
  * @flags: Calculates active flags
@@ -99,7 +98,7 @@ int print_non_printable(va_list args, char buf[], int flags, int width, int prec
  * @size: Size specifier
  * Return: Number of characters printed
  */
-int print_reverse(va_list args, char buf[], int flags, int width, int precision, int size)
+int printReverse(va_list args, char buf[], int flags, int width, int precision, int size)
 {
     char *str;
     int i, char_count = 0;
@@ -132,7 +131,7 @@ int print_reverse(va_list args, char buf[], int flags, int width, int precision,
 
 /************************* PRINT A STRING IN ROT13 *************************/
 /**
- * print_rot13string - Print a string in rot13.
+ * printRot13string - Print a string in rot13.
  * @args: List of arguments
  * @buf: Buffer array to handle print
  * @flags: Calculates active flags
@@ -141,7 +140,7 @@ int print_reverse(va_list args, char buf[], int flags, int width, int precision,
  * @size: Size specifier
  * Return: Number of chars printed
  */
-int print_rot13string(va_list args, char buf[], int flags, int width, int precision, int size)
+int printRot13string(va_list args, char buf[], int flags, int width, int precision, int size)
 {
     char x;
     char *str;

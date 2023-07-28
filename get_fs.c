@@ -1,19 +1,19 @@
 #include "main.h"
 
 /**
- * get_flags - Calculates active flags
+ * getFlags - Calculates active flags
  * @format: Formatted string in which to print the arguments
  * @index: Index to track the position in the format string
  * Return: Flags representing active formatting options
  */
-int get_flags(const char *format, int *index)
+int getFlags(const char *format, int *index)
 {
     /* - + 0 # ' ' */
     /* 1 2 4 8  16 */
     int j, curr_index;
     int flags = 0;
     const char FLAGS_CHARACTERS[] = {'-', '+', '0', '#', ' ', '\0'};
-    const int FLAGS_ARRAY[] = {F_MINUS, F_PLUS, F_ZERO, F_HASH, F_SPACE, 0};
+    const int FLAGS_ARRAY[] = {FLAG_MINUS, FLAG_PLUS, FLAG_ZERO, FLAG_HASH, FLAG_SPACE, 0};
 
     for (curr_index = *index + 1; format[curr_index] != '\0'; curr_index++)
     {

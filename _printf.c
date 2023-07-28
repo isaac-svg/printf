@@ -1,7 +1,7 @@
 #include "main.h"
 
 
-void print_to_buffer(char buffer[], int *buffer_index);
+void printToBuffer(char buffer[], int *buffer_index);
 
 /**
  * _printf - Custom printf function
@@ -13,7 +13,7 @@ int _printf(const char *format, ...)
 	int j, prnt_chars = 0;
 	int flgs, width, prcs, size, buffer_index = 0;
 	va_list args;
-	char buffer[BUFF_SIZE];
+	char buffer[BUFFER_SIZE];
 
 	if (format == NULL)
 		return (-1);
@@ -25,19 +25,19 @@ int _printf(const char *format, ...)
 		if (format[j] != '%')
 		{
 			buffer[buffer_index++] = format[j];
-			if (buffer_index == BUFF_SIZE)
-				print_to_buffer(buffer, &buffer_index);
+			if (buffer_index == BUFFER_SIZE)
+				printToBuffer(buffer, &buffer_index);
 			prnt_chars++;
 		}
 		else
 		{
-			print_to_buffer(buffer, &buffer_index);
-			flgs = get_flags(format, &j);
-			width = get_width(format, &j, args);
-			prcs = get_precision(format, &j, args);
-			size = get_size(format, &j);
+			printToBuffer(buffer, &buffer_index);
+			flgs = getFlags(format, &j);
+			width = getWidth(format, &j, args);
+			prcs = getPrecision(format, &j, args);
+			size = getSize(format, &j);
 			++j;
-			prnt_chars += handle_print(format, &j, args, buffer,
+			prnt_chars += handlePrint(format, &j, args, buffer,
 				flgs, width, prcs, size);
 			if (prnt_chars == -1)
 			{
@@ -47,7 +47,7 @@ int _printf(const char *format, ...)
 		}
 	}
 
-	print_to_buffer(buffer, &buffer_index);
+	printToBuffer(buffer, &buffer_index);
 
 	va_end(args);
 
@@ -55,12 +55,12 @@ int _printf(const char *format, ...)
 }
 
 /**
- * print_to_buffer - Prints the contents of the buffer if it exists
+ * printToBuffer - Prints the contents of the buffer if it exists
  * @buffer: Array containing characters
  * @buffer_index: Index at which to add the next char
  */
 
-void print_to_buffer(char buffer[], int *buffer_index)
+void printToBuffer(char buffer[], int *buffer_index)
 {
 	if (*buffer_index > 0)
 		write(1, &buffer[0], *buffer_index);

@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * handle_print - Prints an argument based on its type
+ * handlePrint - Prints an argument based on its type
  * @format: Formatted string containing the arguments
  * @index: Index to track the position in the format string
  * @arg_list: List of arguments to be printed
@@ -13,7 +13,7 @@
  *
  * Return: Number of characters printed or -1 if an unknown format specifier is found
  */
-int handle_print(const char *format, int *index, va_list arg_list,
+int handlePrint(const char *format, int *index, va_list arg_list,
                  char buffer[], int flags, int width, int precision, int size)
 {
     int i, unknown_len = 0, printed_chars = -1;
@@ -24,11 +24,11 @@ int handle_print(const char *format, int *index, va_list arg_list,
     } FormatType;
 
     FormatType fmt_types[] = {
-        {'c', print_char}, {'s', print_string}, {'%', print_percent},
-        {'i', print_int}, {'d', print_int}, {'b', print_binary},
-        {'u', print_unsigned}, {'o', print_octal}, {'x', print_hexadecimal},
-        {'X', print_hexa_upper}, {'p', print_pointer}, {'S', print_non_printable},
-        {'r', print_reverse}, {'R', print_rot13string}, {'\0', NULL}
+        {'c', printChar}, {'s', printString}, {'%', printPercent},
+        {'i', printInt}, {'d', printInt}, {'b', printBinary},
+        {'u', printUnsigned}, {'o', printOctal}, {'x', printHexadecimal},
+        {'X', printHexUpper}, {'p', printPointer}, {'S', printNonPrintable},
+        {'r', printReverse}, {'R', printRot13string}, {'\0', NULL}
     };
 
     for (i = 0; fmt_types[i].fmt != '\0'; i++)
